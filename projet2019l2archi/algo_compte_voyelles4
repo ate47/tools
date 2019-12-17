@@ -1,0 +1,61 @@
+quad i = 0
+char* text
+quad j = 1
+quad c
+quad compteur[6] = {0, 0, 0, 0, 0, 0}
+char buffer[2] = {0, '\n'}
+
+# fonction qui regarde si RAX est une voyelle et place dans RAX 1 si c'est le cas
+# 0 sinon UTILISE RBX
+
+int est_voyelle(int c)
+	if (c == 'a' || c == 'A')
+		return 1
+	if (c == 'e' || c == 'E')
+		return 2
+	if (c == 'y' || c == 'Y')
+		return 3
+	if (c == 'u' || c == 'U')
+		return 4
+	if (c == 'i' || c == 'I')
+		return 5
+	if (c == 'o' || c == 'O')
+		return 6
+	return 0
+
+void afficher_occurence(int numero, char lettre)
+	buffer[0] = lettre
+	affiche_entier(compteur[numero])
+	if (compteur[numero] > 1)
+		write(stdout, " occurrence de ", 15)
+	else
+		write(stdout, " occurrences de ", 16)
+	write(stdout, buffer, 2)
+
+# verification des arguments
+
+if (argc < 2)
+	 write(stdout, "Il faut au moins un argument!\n", 30)
+	 exit(-1)
+
+
+texte = argv[j]
+
+# lecture
+do {
+	for (i = 0; texte[i] != 0; i++)
+		c = est_voyelle(texte[i])
+		if (c != 0)
+			compteur[c - 1]++
+
+	texte = argv[j++]
+} while (texte != NULL)
+# affichage
+afficher_occurence(0, 'a')
+afficher_occurence(1, 'e')
+afficher_occurence(4, 'i')
+afficher_occurence(5, 'o')
+afficher_occurence(3, 'u')
+afficher_occurence(2, 'y')
+
+exit(0)
